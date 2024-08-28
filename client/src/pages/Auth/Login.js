@@ -4,22 +4,22 @@ import toast from 'react-hot-toast';
 import axios from 'axios';
 import {useNavigate} from 'react-router-dom';
 
-const Register = () => {
-    const [name,setName] = useState('');
+const Login = () => {
+    
     const [email,setEmail] = useState('');
-    const [phone,setPhone] = useState('');
+    
     const [password,setPassword] = useState('');
-    const [address,setAddress] = useState('');
+    
     const navigate = useNavigate();
 
     //form function
     const handleSubmit = async (e) => {
         e.preventDefault();
         try{
-            const res = await axios.post(`${process.env.REACT_APP_API}/api/v1/auth/register`, {name,email,password,phone,address});
+            const res = await axios.post(`${process.env.REACT_APP_API}/api/v1/auth/login`, {email,password});
             if(res && res.data.success){
                 toast.success(res.data && res.data.message);
-                navigate('/login');
+                navigate('/');
             }else{
                 toast.error(res.data.message);
             }
@@ -29,35 +29,28 @@ const Register = () => {
         }
     };
 
+
   return (
     <Layout title="Register - Ecommerce app">
         <div className='form-container'>
-            <h4>Register Page</h4>
+            <h4>Login Page</h4>
             <form onSubmit={handleSubmit}>
-                <div className="mb-3">
-                    <input type="text" value={name} onChange={(e) => setName(e.target.value)} className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder='Enter Your Name' required/>
-                </div>
+                
                 <div className="mb-3">
                     
                     <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder='Enter Your Password' required/>
                 </div>
-                <div className="mb-3">
-                    
-                    <input type="text" value={phone} onChange={(e) => setPhone(e.target.value)} className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder='Enter Your Phone No.' required/>
-                </div>
+                
                 <div className="mb-3">
                     
                     <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} className="form-control" id="exampleInputPassword1"  placeholder='Enter Your Password' required/>
                 </div>
-                <div className="mb-3">
-                    
-                    <input type="text" value={address} onChange={(e) => setAddress(e.target.value)} className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder='Enter Your Address' required/>
-                </div>
-                <button type="submit" className="btn btn-primary">Register</button>
+                
+                <button type="submit" className="btn btn-primary">Login</button>
             </form>
         </div>
     </Layout>
   )
 }
 
-export default Register
+export default Login
