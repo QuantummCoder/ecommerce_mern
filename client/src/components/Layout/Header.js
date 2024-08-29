@@ -1,8 +1,22 @@
 import React from 'react';
 import {NavLink,Link} from 'react-router-dom';
 import { FaShopify } from "react-icons/fa6";
+import { useAuth } from '../../context/auth';
+import toast from 'react-hot-toast';
 
 const Header = () => {
+  const [auth,setAuth] = useAuth();
+
+  const handleLogout = () => {
+    setAuth({
+      ...auth,
+      user:null,
+      token:''
+    });
+    localStorage.removeItem('auth');
+    toast.success('Logout Successfully');
+  }
+
   return (
     <>
       <nav className="navbar navbar-expand-lg bg-body-tertiary">
@@ -16,12 +30,20 @@ const Header = () => {
         <li className="nav-item">
           <NavLink to='/' className="nav-link active" aria-current="page" href="#">Home</NavLink>
         </li>
-        <li className="nav-item">
-          <NavLink to='/register' className="nav-link" href="#">Register</NavLink>
-        </li>
-        <li className="nav-item">
-          <NavLink to='/login' className="nav-link" href="#">Login</NavLink>
-        </li>
+        {
+          !auth.user ? (<>
+            <li className="nav-item">
+              <NavLink to='/register' className="nav-link" href="#">Register</NavLink>
+            </li>
+            <li className="nav-item">
+              <NavLink to='/login' className="nav-link" href="#">Login</NavLink>
+            </li> 
+          </>) : (<>
+            <li className="nav-item">
+              <NavLink onClick={handleLogout} to='/login' className="nav-link" href="#">Logout</NavLink>
+            </li> 
+          </>)
+        }
         <li className="nav-item">
           <NavLink to='/cart' className="nav-link" href="#">Cart (0)</NavLink>
         </li>
