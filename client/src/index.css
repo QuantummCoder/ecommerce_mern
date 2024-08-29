@@ -92,3 +92,10 @@
   color: white;
 }
 
+/* contact us */
+.contact{
+  display: flex;
+  justify-content: space-between;
+  min-height: 70vh;
+  font-family: "Poppins", sans-serif;
+}
